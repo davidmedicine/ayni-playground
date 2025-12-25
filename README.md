@@ -1,113 +1,101 @@
-# Ayni Guardian Playground (Streamlit)
+# ayni-playground — Local AI Evaluation (Research Preview)
 
-A minimal local Streamlit app to test **local LLMs**.
+A minimal Streamlit workspace for testing **local/edge LLMs** with an **offline-first** mindset.
 
-Supports two backends:
-- **Ollama** (recommended for ease)
-- **GGUF / llama.cpp** via `llama-cpp-python`
+This repo is part of **Qori Labs** (Public Interest Technology Lab): we prototype “Sovereign Layers” for territories with unreliable connectivity—where **models run locally**, data stays local, and governance can be enforced.
+
+**Status:** Research Preview (v0.1)  
+**Privacy:** No cloud calls by default. Runs on your machine or a local LAN host.
+
+---
+
+## What this is for
+
+Use this app to:
+- Run quick local chat tests against a small model (no external APIs).
+- Compare two execution backends:
+  - **Ollama** (easiest workflow)
+  - **GGUF / llama.cpp** via `llama-cpp-python` (direct model file)
+- Tune evaluation parameters (system prompt, temperature, max tokens).
+- Keep experiments **reproducible** and aligned with data sovereignty constraints.
+
+---
 
 ## Quick start
 
 ### 1) Setup
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # (Windows: .venv\Scripts\activate)
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-### 2A) Run with Ollama (easiest)
-
+2A) Run with Ollama (recommended)
 Install Ollama.
 
 Start server:
-```bash
+
+bash
+Copy code
 ollama serve
-```
-
 Pull a small model:
-```bash
+
+bash
+Copy code
 ollama pull tinyllama
-```
-
 Run Streamlit:
-```bash
+
+bash
+Copy code
 streamlit run app.py
-```
-
 In the sidebar:
-- Backend: `ollama`
-- Model name: `tinyllama`
 
-### 2B) Run with GGUF (direct llama.cpp)
+Backend: ollama
 
-Download a GGUF model file (quantized) and place it in `./models/`.
+Model: tinyllama
+
+2B) Run with GGUF (direct llama.cpp)
+Place a quantized GGUF file in ./models/.
 
 Run:
-```bash
+
+bash
+Copy code
 streamlit run app.py
-```
-
 In the sidebar:
-- Backend: `gguf`
-- Path: `models/<your-model>.gguf`
 
-### Hardware guidance
+Backend: gguf
 
-Start with a small quantized model (GGUF q4). If laptops are weak, prefer:
-- Ollama + tiny model, or
-- one lab machine serving Ollama on LAN.
+Path: models/<your-model>.gguf
 
-## Repo details page
+Hardware guidance (practical)
+Start small:
 
-### Ayni Guardian Playground (Español)
+GGUF q4 quantization is usually the best default.
 
-Un entorno simple para probar modelos de lenguaje locales en tu propia máquina.
+If a laptop struggles, use either:
 
-Este prototipo forma parte del programa Ayni Intelligence: construimos herramientas offline-first para comunicación y conocimiento local en los Altos Andes—pensadas para funcionar cuando el internet falla y para respetar la soberanía de datos.
+Ollama with a tiny model, or
 
-#### Qué puedes hacer aquí
-- Probar un modelo local en modo chat (sin APIs externas).
-- Cambiar el system prompt y parámetros como temperatura y tokens.
-- Comparar dos formas de correr modelos:
-  - Ollama (recomendado): más fácil de instalar y usar.
-  - GGUF / llama.cpp: cargar un archivo .gguf directamente.
+one local “lab” machine serving Ollama on the LAN.
 
-#### Importante
-- Este demo no sube tus mensajes a la nube.
-- Los modelos no vienen incluidos en este repositorio. Para usar IA local, necesitas:
-  - descargar un modelo pequeño (ej. TinyLlama), o
-  - conectarte a un servidor local (por ejemplo, una PC del laboratorio en la misma red).
+Data + safety (research discipline)
+This repo is meant to support Qori Labs’ standards:
 
-#### Buenas prácticas (fase 1)
-- Usa datasets públicos/permitidos o sintéticos.
-- Evita datos personales o sensibles.
-- Si el modelo no está seguro, es mejor que lo diga claramente.
+Use synthetic, public, or permitted datasets only.
 
-Objetivo: mantenerlo simple y reproducible para pruebas rápidas, benchmarks y demos en laboratorio.
+Avoid personal or sensitive data.
 
-### Ayni Guardian Playground (English)
+Prefer “no PII by design”: don’t paste private identifiers into prompts.
 
-A simple environment to test local language models on your own machine.
+If the model is uncertain, it should say so.
 
-This prototype is part of Ayni Intelligence: we build offline-first tools for local communication and knowledge in the High Andes—designed to keep working when the internet fails and to respect data sovereignty.
+This is evaluation tooling, not a production safety system.
 
-#### What you can do here
-- Test a local model in chat mode (no external APIs).
-- Edit the system prompt and tune parameters like temperature and max tokens.
-- Compare two ways of running models:
-  - Ollama (recommended): easiest installation and workflow.
-  - GGUF / llama.cpp: load a .gguf file directly.
+Roadmap (near-term)
+Add simple test suites (prompt packs) for repeatable benchmarks
 
-#### Important
-- This demo does not send your messages to the cloud.
-- Models are not included in this repository. To use local AI, you’ll need to:
-  - download a small model (e.g., TinyLlama), or
-  - connect to a local server (for example, a lab PC on the same network).
+Add “local RAG” mode using a small local knowledge base
 
-#### Good practices (Phase 1)
-- Use public/permitted or synthetic datasets.
-- Avoid personal or sensitive data.
-- If the model isn’t sure, it should say so.
+Export results summaries for research notes / annexes
 
-Goal: keep it simple and reproducible for quick tests, benchmarks, and lab demos.
-# ayni-playground
+License
+MIT (unless otherwise stated per component).
